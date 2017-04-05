@@ -2,7 +2,7 @@
 
 MobX Integration react-navigation + [Navigation Playground Example](https://github.com/react-community/react-navigation/tree/master/examples/NavigationPlayground).
 
-I implemented [NavigationStore](./blob/master/src/stores/NavigationStore.js).
+I implemented [NavigationStore](https://github.com/hotchpotch/react-navigation-mobx-example/blob/master/src/stores/NavigationStore.js).
 
 ![](https://github.com/hotchpotch/react-navigation-mobx-example/blob/master/thumb.png?raw=true)
 
