@@ -1,7 +1,5 @@
 // @flow
-import {
-  NavigationActions,
-} from 'react-navigation';
+import { NavigationActions } from 'react-navigation';
 
 import type {
   NavigationAction,
@@ -14,6 +12,7 @@ import type {
 
 import { action, computed, observable } from 'mobx';
 import autobind from 'autobind-decorator';
+import remotedev from 'mobx-remotedev';
 
 function getCurrentState(
   state: NavigationState,
@@ -25,6 +24,7 @@ function getCurrentState(
   return childRoute;
 }
 
+@remotedev({ name: 'NavigationStore', filters: { whitelist: 'update' } })
 class NavigationStore {
   @observable.ref
   navigationState: ?NavigationState = null;
@@ -56,7 +56,10 @@ class NavigationStore {
   }
 
   @computed get state(): NavigationState | (NavigationRoute & NavigationState) {
-    return getCurrentState(this.navigationState);
+    if (this.navigationState) {
+      return getCurrentState(this.navigationState);
+    }
+    return null;
   }
 
   @autobind goBack(key?: ?string): boolean {

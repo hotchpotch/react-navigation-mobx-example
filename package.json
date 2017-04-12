@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "postinstall": "rndebugger-open",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest"
   },
@@ -15,6 +16,7 @@
     "react": "~15.4.1",
     "react-native": "0.42.3",
     "react-native-vector-icons": "^4.0.0",
+    "mobx-remotedev": "^0.2.6",
     "react-navigation": "^1.0.0-beta.7"
   },
   "devDependencies": {
@@ -33,6 +35,7 @@
     "flow-bin": "0.42.0",
     "isomorphic-fetch": "^2.2.1",
     "jest": "19.0.2",
+    "react-native-debugger-open": "^0.3.5",
     "react-test-renderer": "~15.4.0"
   },
   "jest": {
