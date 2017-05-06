@@ -89,7 +89,7 @@ const MainScreen = inject('navigationStore')(({ navigationStore }) => (
           const { path, params, screen } = ExampleRoutes[routeName];
           const { router } = screen;
           const action = path && router.getActionForPathAndParams(path, params);
-          navigationStore.navigate(routeName, {}, action);
+          navigationStore.navigate(routeName, {1:2}, action);
         }}
       >
         <View style={styles.item}>
