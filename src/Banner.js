@@ -3,9 +3,11 @@
 import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
+const logo = require('./assets/NavLogo.png');
+
 const Banner = () => (
   <View style={styles.banner}>
-    <Image source={require('./assets/NavLogo.png')} style={styles.image} />
+    <Image source={logo} style={styles.image} />
     <Text style={styles.title}>React Navigation Examples with MobX</Text>
   </View>
 );

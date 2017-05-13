@@ -89,7 +89,7 @@ const MainScreen = inject('navigationStore')(({ navigationStore }) => (
           const { path, params, screen } = ExampleRoutes[routeName];
           const { router } = screen;
           const action = path && router.getActionForPathAndParams(path, params);
-          navigationStore.navigate(routeName, {1:2}, action);
+          navigationStore.navigate(routeName, { 1: 2 }, action);
         }}
       >
         <View style={styles.item}>
@@ -127,10 +127,13 @@ stores.navigationStore.setNavigator(AppNavigator);
 class AppNavigationMobx extends React.Component {
   componentDidMount() {
     this.subs = BackAndroid.addEventListener('backPress', () =>
-      this.props.navigationStore.goBack());
+      this.props.navigationStore.goBack(),
+    );
   }
   componentWillUnmount() {
-    this.subs && this.subs.remove();
+    if (this.subs) {
+      this.subs.remove();
+    }
   }
   subs: ?{
     remove: () => void,
@@ -139,8 +142,8 @@ class AppNavigationMobx extends React.Component {
   render() {
     const { navigationStore } = this.props;
     const navigation = addNavigationHelpers({
-      dispatch: this.props.navigationStore.dispatchNavigation,
-      state: this.props.navigationStore.navigationState,
+      dispatch: navigationStore.dispatchNavigation,
+      state: navigationStore.navigationState,
     });
     return <AppNavigator navigation={navigation} />;
   }

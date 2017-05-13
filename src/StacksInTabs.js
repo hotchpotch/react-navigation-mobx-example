@@ -29,11 +29,11 @@ const MyNavScreen = inject('navigationStore')(({ navigationStore, banner }) => (
 const MyHomeScreen = () => <MyNavScreen banner="Home Screen" />;
 
 const MyProfileScreen = inject('navigationStore')(({ navigationStore }) => (
-  <MyNavScreen banner={`${navigationStore.state.params.name}s Profile`} />
+  <MyNavScreen banner={`${navigationStore.state.params.name}'s Profile`} />
 ));
-MyProfileScreen.navigationOptions = {
-  title: ({ state }) => `${state.params.name}'s Profile!`,
-};
+MyProfileScreen.navigationOptions = ({ navigation }) => ({
+  title: `${navigation.state.params.name}'s Profile!`,
+});
 
 const MyNotificationsSettingsScreen = () => <MyNavScreen banner="Notification Settings" />;
 
@@ -43,16 +43,16 @@ const MainTab = StackNavigator({
   Home: {
     screen: MyHomeScreen,
     path: '/',
-    navigationOptions: {
-      title: () => 'Welcome',
-    },
+    navigationOptions: () => ({
+      title: 'Welcome',
+    }),
   },
   Profile: {
     screen: MyProfileScreen,
     path: '/people/:name',
-    navigationOptions: {
-      title: ({ state }) => `${state.params.name}'s Profile!`,
-    },
+    navigationOptions: ({ navigation }) => ({
+      title: `${navigation.state.params.name}'s Profile!`,
+    }),
   },
 });
 
@@ -60,15 +60,15 @@ const SettingsTab = StackNavigator({
   Settings: {
     screen: MySettingsScreen,
     path: '/',
-    navigationOptions: {
-      title: () => 'Settings',
-    },
+    navigationOptions: () => ({
+      title: 'Settings',
+    }),
   },
   NotifSettings: {
     screen: MyNotificationsSettingsScreen,
-    navigationOptions: {
-      title: () => 'Notification Settings',
-    },
+    navigationOptions: () => ({
+      title: 'Notification Settings',
+    }),
   },
 });
 
@@ -77,34 +77,30 @@ const StacksInTabs = TabNavigator(
     MainTab: {
       screen: MainTab,
       path: '/',
-      navigationOptions: {
-        tabBar: () => ({
-          label: 'Home',
-          icon: ({ tintColor, focused }) => (
-            <Ionicons
-              name={focused ? 'ios-home' : 'ios-home-outline'}
-              size={26}
-              style={{ color: tintColor }}
-            />
-          ),
-        }),
-      },
+      navigationOptions: () => ({
+        tabBarLabel: 'Home',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Ionicons
+            name={focused ? 'ios-home' : 'ios-home-outline'}
+            size={26}
+            style={{ color: tintColor }}
+          />
+        ),
+      }),
     },
     SettingsTab: {
       screen: SettingsTab,
       path: '/settings',
-      navigationOptions: {
-        tabBar: () => ({
-          label: 'Settings',
-          icon: ({ tintColor, focused }) => (
-            <Ionicons
-              name={focused ? 'ios-settings' : 'ios-settings-outline'}
-              size={26}
-              style={{ color: tintColor }}
-            />
-          ),
-        }),
-      },
+      navigationOptions: () => ({
+        tabBarLabel: 'Settings',
+        tabBarIcon: ({ tintColor, focused }) => (
+          <Ionicons
+            name={focused ? 'ios-home' : 'ios-home-outline'}
+            size={26}
+            style={{ color: tintColor }}
+          />
+        ),
+      }),
     },
   },
   {

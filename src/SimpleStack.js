@@ -13,7 +13,7 @@ const MyNavScreen = inject('navigationStore')(({ banner, navigationStore }) => (
   <ScrollView>
     <SampleText>{banner}</SampleText>
     <Button
-      onPress={() => navigationStore.navigate('Profile', { name: 'Jane', mode: 'edit'})}
+      onPress={() => navigationStore.navigate('Profile', { name: 'Jane', mode: 'edit' })}
       title="Go to a profile screen"
     />
     <Button
@@ -30,8 +30,7 @@ MyHomeScreen.navigationOptions = {
 };
 
 const MyPhotosScreen = inject('navigationStore')(({ navigationStore }) => (
-  <MyNavScreen
-    banner={`${navigationStore.state.params.name}'s Photos`} />
+  <MyNavScreen banner={`${navigationStore.state.params.name}'s Photos`} />
 ));
 
 MyPhotosScreen.navigationOptions = {
@@ -40,20 +39,21 @@ MyPhotosScreen.navigationOptions = {
 
 const MyProfileScreen = inject('navigationStore')(({ navigationStore }) => (
   <MyNavScreen
-    banner={`${navigationStore.state.params.mode === 'edit' ? 'Now Editing ' : ''}${navigationStore.state.params.name}'s Profile`
-    }
+    banner={`${navigationStore.state.params.mode === 'edit' ? 'Now Editing ' : ''}${navigationStore.state.params.name}'s Profile`}
   />
 ));
 MyProfileScreen.navigationOptions = ({ navigation }) => {
   const { state, setParams } = navigation;
   return {
     title: `${state.params.name}'s Profile!`,
-      // Render a button on the right side of the header.
-      // When pressed switches the screen to edit mode.
+    // Render a button on the right side of the header.
+    // When pressed switches the screen to edit mode.
     headerRight: (
       <Button
         title={state.params.mode === 'edit' ? 'Done' : 'Edit'}
-        onPress={() => setParams({ mode: state.params.mode === 'edit' ? '' : 'edit' })}
+        onPress={() => {
+          setParams({ mode: state.params.mode === 'edit' ? '' : 'edit' });
+        }}
       />
     ),
   };

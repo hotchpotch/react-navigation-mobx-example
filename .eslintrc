@@ -21,6 +21,8 @@
     "react/jsx-filename-extension": 0,
     "react/prefer-stateless-function": 0,
     "react/forbid-prop-types": 0,
+    "react/no-multi-comp": 0,
+    "react/prop-types": 0,
     // "camelcase": [2, { "properties": "never" }],
     "flowtype/define-flow-type": 1,
     "flowtype/use-flow-type": 1,

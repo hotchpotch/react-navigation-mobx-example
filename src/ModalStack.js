@@ -21,18 +21,17 @@ const MyNavScreen = inject('navigationStore')(({ navigationStore, banner }) => (
       title="Go to a header toggle screen"
     />
     {navigationStore.state.routeName === 'HeaderTest' &&
-    <Button
-      title="Toggle Header"
-      onPress={() => navigationStore.setParams({
-        header: navigationStore.state.params &&
-                navigationStore.state.params.header === 'visible'
-                ? 'none'
-                : 'visible',
-      })}
-    />}
+      <Button
+        title="Toggle Header"
+        onPress={() =>
+          navigationStore.setParams({
+            headerVisible: !navigationStore.state.params ||
+              !navigationStore.state.params.headerVisible,
+          })}
+      />}
     <Button onPress={() => navigationStore.goBack(null)} title="Go back" />
   </ScrollView>
-  ));
+));
 
 const MyHomeScreen = () => <MyNavScreen banner="Home Screen" />;
 MyHomeScreen.navigationOptions = {
@@ -42,16 +41,20 @@ MyHomeScreen.navigationOptions = {
 const MyProfileScreen = inject('navigationStore')(({ navigationStore }) => (
   <MyNavScreen banner={`${navigationStore.state.params.name}'s Profile`} />
 ));
-MyProfileScreen.navigationOptions = {
-  title: ({ state }) => `${state.params.name}'s Profile!`,
-};
+MyProfileScreen.navigationOptions = ({ navigation }) => ({
+  title: `${navigation.state.params.name}'s Profile!`,
+});
 
-const MyHeaderTestScreen = () => <MyNavScreen banner={'Full screen view'} />;
-MyHeaderTestScreen.navigationOptions = {
-  header: ({ state }) => ({
-    visible: !!state.params && state.params.header === 'visible',
+const MyHeaderTestScreen = inject('navigationStore')(() => (
+  <MyNavScreen banner={'Full screen view'} />
+));
+
+MyHeaderTestScreen.navigationOptions = ({ navigation }) => {
+  const headerVisible = navigation.state.params && navigation.state.params.headerVisible;
+  return {
+    header: headerVisible ? undefined : null,
     title: 'Now you see me',
-  }),
+  };
 };
 
 const ModalStack = StackNavigator(
