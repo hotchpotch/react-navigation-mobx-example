@@ -1,16 +1,9 @@
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Provider, inject } from 'mobx-react/native';
 import { StackNavigator } from 'react-navigation';
 import { autorun, useStrict } from 'mobx';
 import { enableLogging } from 'mobx-logger';
-import React from 'react';
+import React, { Component } from 'react';
 
 import Banner from './Banner';
 import CustomTabs from './CustomTabs';
@@ -79,27 +72,33 @@ const ExampleRoutes = {
   },
 };
 
-const MainScreen = inject('nav')(({ nav }) => (
-  <ScrollView>
-    <Banner />
-    {Object.keys(ExampleRoutes).map((routeName: string) => (
-      <TouchableOpacity
-        key={routeName}
-        onPress={() => {
-          const { path, params, screen } = ExampleRoutes[routeName];
-          const { router } = screen;
-          const action = path && router.getActionForPathAndParams(path, params);
-          nav.navigate(routeName, { 1: 2 }, action);
-        }}
-      >
-        <View style={styles.item}>
-          <Text style={styles.title}>{ExampleRoutes[routeName].name}</Text>
-          <Text style={styles.description}>{ExampleRoutes[routeName].description}</Text>
-        </View>
-      </TouchableOpacity>
-    ))}
-  </ScrollView>
-));
+@inject('nav')
+class MainScreen extends Component {
+  render() {
+    const { nav } = this.props;
+    return (
+      <ScrollView>
+        <Banner />
+        {Object.keys(ExampleRoutes).map((routeName: string) => (
+          <TouchableOpacity
+            key={routeName}
+            onPress={() => {
+              const { path, params, screen } = ExampleRoutes[routeName];
+              const { router } = screen;
+              const action = path && router.getActionForPathAndParams(path, params);
+              nav.navigate(routeName, { 1: 2 }, action);
+            }}
+          >
+            <View style={styles.item}>
+              <Text style={styles.title}>{ExampleRoutes[routeName].name}</Text>
+              <Text style={styles.description}>{ExampleRoutes[routeName].description}</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+    );
+  }
+}
 
 const AppNavigator = StackNavigator(
   {
