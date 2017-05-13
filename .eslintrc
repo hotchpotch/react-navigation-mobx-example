@@ -5,7 +5,7 @@
   ],
   "plugins": [
     "jest",
-    "flow-vars",
+    "flowtype",
     "prefer-object-spread"
   ],
   "env": {
@@ -22,8 +22,8 @@
     "react/prefer-stateless-function": 0,
     "react/forbid-prop-types": 0,
     // "camelcase": [2, { "properties": "never" }],
-    "flow-vars/define-flow-type": 1,
-    "flow-vars/use-flow-type": 1,
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1,
     "no-console": 0,
     // "react/sort-comp": 0,
     "no-use-before-define": 0,
