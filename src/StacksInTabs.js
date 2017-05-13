@@ -10,26 +10,26 @@ import React from 'react';
 
 import SampleText from './SampleText';
 
-const MyNavScreen = inject('navigationStore')(({ navigationStore, banner }) => (
+const MyNavScreen = inject('nav')(({ nav, banner }) => (
   <ScrollView>
     <SampleText>{banner}</SampleText>
     <Button
-      onPress={() => navigationStore.navigate('Profile', { name: 'Jordan' })}
+      onPress={() => nav.navigate('Profile', { name: 'Jordan' })}
       title="Go to a profile screen"
     />
     <Button
-      onPress={() => navigationStore.navigate('NotifSettings')}
+      onPress={() => nav.navigate('NotifSettings')}
       title="Go to notification settings"
     />
-    <Button onPress={() => navigationStore.navigate('Settings')} title="Go to settings" />
-    <Button onPress={() => navigationStore.goBack(null)} title="Go back" />
+    <Button onPress={() => nav.navigate('Settings')} title="Go to settings" />
+    <Button onPress={() => nav.goBack(null)} title="Go back" />
   </ScrollView>
 ));
 
 const MyHomeScreen = () => <MyNavScreen banner="Home Screen" />;
 
-const MyProfileScreen = inject('navigationStore')(({ navigationStore }) => (
-  <MyNavScreen banner={`${navigationStore.state.params.name}'s Profile`} />
+const MyProfileScreen = inject('nav')(({ nav }) => (
+  <MyNavScreen banner={`${nav.state.params.name}'s Profile`} />
 ));
 MyProfileScreen.navigationOptions = ({ navigation }) => ({
   title: `${navigation.state.params.name}'s Profile!`,

@@ -9,18 +9,18 @@ import React from 'react';
 
 import SampleText from './SampleText';
 
-const MyNavScreen = inject('navigationStore')(({ banner, navigationStore }) => (
+const MyNavScreen = inject('nav')(({ banner, nav }) => (
   <ScrollView>
     <SampleText>{banner}</SampleText>
     <Button
-      onPress={() => navigationStore.navigate('Profile', { name: 'Jane', mode: 'edit' })}
+      onPress={() => nav.navigate('Profile', { name: 'Jane', mode: 'edit' })}
       title="Go to a profile screen"
     />
     <Button
-      onPress={() => navigationStore.navigate('Photos', { name: 'Jane' })}
+      onPress={() => nav.navigate('Photos', { name: 'Jane' })}
       title="Go to a photos screen"
     />
-    <Button onPress={() => navigationStore.goBack(null)} title="Go back" />
+    <Button onPress={() => nav.goBack(null)} title="Go back" />
   </ScrollView>
 ));
 
@@ -29,17 +29,17 @@ MyHomeScreen.navigationOptions = {
   title: 'Welcome',
 };
 
-const MyPhotosScreen = inject('navigationStore')(({ navigationStore }) => (
-  <MyNavScreen banner={`${navigationStore.state.params.name}'s Photos`} />
+const MyPhotosScreen = inject('nav')(({ nav }) => (
+  <MyNavScreen banner={`${nav.state.params.name}'s Photos`} />
 ));
 
 MyPhotosScreen.navigationOptions = {
   title: 'Photos',
 };
 
-const MyProfileScreen = inject('navigationStore')(({ navigationStore }) => (
+const MyProfileScreen = inject('nav')(({ nav }) => (
   <MyNavScreen
-    banner={`${navigationStore.state.params.mode === 'edit' ? 'Now Editing ' : ''}${navigationStore.state.params.name}'s Profile`}
+    banner={`${nav.state.params.mode === 'edit' ? 'Now Editing ' : ''}${nav.state.params.name}'s Profile`}
   />
 ));
 MyProfileScreen.navigationOptions = ({ navigation }) => {

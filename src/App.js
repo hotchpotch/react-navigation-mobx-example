@@ -1,5 +1,4 @@
 import {
-  BackAndroid,
   Platform,
   ScrollView,
   StyleSheet,
@@ -7,8 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Provider, inject, observer } from 'mobx-react/native';
-import { StackNavigator, addNavigationHelpers } from 'react-navigation';
+import { Provider, inject } from 'mobx-react/native';
+import { StackNavigator } from 'react-navigation';
 import { autorun, useStrict } from 'mobx';
 import { enableLogging } from 'mobx-logger';
 import React from 'react';
@@ -20,6 +19,7 @@ import ModalStack from './ModalStack';
 import SimpleStack from './SimpleStack';
 import SimpleTabs from './SimpleTabs';
 import StacksInTabs from './StacksInTabs';
+import createNavigationContainer from './utils/createNavigationContainer';
 import stores from './stores';
 
 useStrict(true);
@@ -79,7 +79,7 @@ const ExampleRoutes = {
   },
 };
 
-const MainScreen = inject('navigationStore')(({ navigationStore }) => (
+const MainScreen = inject('nav')(({ nav }) => (
   <ScrollView>
     <Banner />
     {Object.keys(ExampleRoutes).map((routeName: string) => (
@@ -89,7 +89,7 @@ const MainScreen = inject('navigationStore')(({ navigationStore }) => (
           const { path, params, screen } = ExampleRoutes[routeName];
           const { router } = screen;
           const action = path && router.getActionForPathAndParams(path, params);
-          navigationStore.navigate(routeName, { 1: 2 }, action);
+          nav.navigate(routeName, { 1: 2 }, action);
         }}
       >
         <View style={styles.item}>
@@ -120,38 +120,13 @@ const AppNavigator = StackNavigator(
   },
 );
 
-stores.navigationStore.setNavigator(AppNavigator);
+stores.nav.setNavigator(AppNavigator);
 
-@inject('navigationStore')
-@observer
-class AppNavigationMobx extends React.Component {
-  componentDidMount() {
-    this.subs = BackAndroid.addEventListener('backPress', () =>
-      this.props.navigationStore.goBack(),
-    );
-  }
-  componentWillUnmount() {
-    if (this.subs) {
-      this.subs.remove();
-    }
-  }
-  subs: ?{
-    remove: () => void,
-  } = null;
-
-  render() {
-    const { navigationStore } = this.props;
-    const navigation = addNavigationHelpers({
-      dispatch: navigationStore.dispatchNavigation,
-      state: navigationStore.navigationState,
-    });
-    return <AppNavigator navigation={navigation} />;
-  }
-}
+const AppNavigationMobx = createNavigationContainer(AppNavigator);
 
 autorun('NavigationStore State', () => {
-  console.log('navigationState', stores.navigationStore.navigationState);
-  console.log('current state', stores.navigationStore.state);
+  console.log('navigationState', stores.nav.navigationState);
+  console.log('current state', stores.nav.state);
 });
 
 class App extends React.Component {

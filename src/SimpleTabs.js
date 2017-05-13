@@ -8,12 +8,12 @@ import React from 'react';
 
 import SampleText from './SampleText';
 
-const MyNavScreen = inject('navigationStore')(({ navigationStore, banner }) => (
+const MyNavScreen = inject('nav')(({ nav, banner }) => (
   <ScrollView style={styles.container}>
     <SampleText>{banner}</SampleText>
-    <Button onPress={() => navigationStore.navigate('Home')} title="Go to home tab" />
-    <Button onPress={() => navigationStore.navigate('Settings')} title="Go to settings tab" />
-    <Button onPress={() => navigationStore.goBack(null)} title="Go back" />
+    <Button onPress={() => nav.navigate('Home')} title="Go to home tab" />
+    <Button onPress={() => nav.navigate('Settings')} title="Go to settings tab" />
+    <Button onPress={() => nav.goBack(null)} title="Go back" />
   </ScrollView>
 ));
 

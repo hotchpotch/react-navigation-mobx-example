@@ -12,15 +12,15 @@ import React from 'react';
 
 import SampleText from './SampleText';
 
-const MyNavScreen = inject('navigationStore')(({ navigationStore, banner }) => (
+const MyNavScreen = inject('nav')(({ nav, banner }) => (
   <ScrollView style={styles.container}>
     <SampleText>{banner}</SampleText>
     <Button
-      onPress={() => navigationStore.navigate('DrawerOpen')}
+      onPress={() => nav.navigate('DrawerOpen')}
       title="Open drawer"
     />
     <Button
-      onPress={() => navigationStore.goBack(null)}
+      onPress={() => nav.goBack(null)}
       title="Go back"
     />
   </ScrollView>

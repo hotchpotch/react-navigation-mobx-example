@@ -24,12 +24,12 @@ import React from 'react';
 import SampleText from './SampleText';
 import stores from './stores';
 
-const MyNavScreen = inject('navigationStore')(({ navigationStore, banner }) => (
+const MyNavScreen = inject('nav')(({ nav, banner }) => (
   <ScrollView>
     <SampleText>{banner}</SampleText>
     <Button
       onPress={() => {
-        navigationStore.goBack(null);
+        nav.goBack(null);
       }}
       title="Go back"
     />
